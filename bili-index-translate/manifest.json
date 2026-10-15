@@ -1,0 +1,32 @@
+// manifest.json
+{
+  "manifest_version": 3,
+  "name": "Bili Index Translate",
+  "version": "1.0.0",
+  "description": "Translate selected text on any page with the Bilibili Index-Translate OpenAI-compatible API.",
+  "permissions": ["storage", "contextMenus", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://index-translate.bilibili.com/*",
+    "https://seep.eu.org/*"
+  ],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Bili Index Translate - open options"
+  }
+}

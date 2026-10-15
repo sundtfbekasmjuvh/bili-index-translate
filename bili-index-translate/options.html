@@ -1,0 +1,90 @@
+<!-- options.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bili Index Translate - Options</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "PingFang SC", "Microsoft YaHei", sans-serif;
+      max-width: 640px;
+      margin: 32px auto;
+      padding: 0 16px;
+    }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    p.lead { margin: 0 0 20px; opacity: 0.7; }
+    label { display: block; font-weight: 600; margin: 16px 0 4px; }
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 7px 9px;
+      font: inherit;
+      border: 1px solid #9aa0a6;
+      border-radius: 6px;
+      background: transparent;
+      color: inherit;
+    }
+    small { display: block; margin-top: 4px; opacity: 0.7; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    button {
+      padding: 7px 14px;
+      font: inherit;
+      border-radius: 6px;
+      border: 1px solid #9aa0a6;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    button.primary { background: #0b57d0; border-color: #0b57d0; color: #fff; }
+    #status { margin-top: 14px; min-height: 1.5em; white-space: pre-wrap; overflow-wrap: anywhere; }
+    #status.ok { color: #1a7f37; }
+    #status.err { color: #d1242f; }
+  </style>
+</head>
+<body>
+  <h1>Bili Index Translate</h1>
+  <p class="lead">Settings are stored in <code>chrome.storage.sync</code> and apply to the next translation.</p>
+
+  <form id="form" autocomplete="off">
+    <label for="base">Base URL</label>
+    <input id="base" type="url" placeholder="https://index-translate.bilibili.com/v1" required>
+    <small>OpenAI-compatible root. <code>/chat/completions</code> is appended.</small>
+
+    <label for="proxy">Relay prefix</label>
+    <input id="proxy" type="text" placeholder="https://seep.eu.org/https://index-translate.bilibili.com/v1">
+    <small>
+      Empty = call the Base URL directly and, only if it answers HTTP 412, retry once through the
+      built-in relay <code>https://seep.eu.org/&lt;Base URL&gt;</code>.
+      Non-empty = send every request to <code>&lt;prefix&gt;/chat/completions</code>.
+    </small>
+
+    <label for="model">Model</label>
+    <select id="model">
+      <option value="Index-Translate-2B">Index-Translate-2B</option>
+      <option value="Index-Translate-9B">Index-Translate-9B</option>
+      <option value="Index-Translate-35B-A3B">Index-Translate-35B-A3B</option>
+    </select>
+
+    <label for="key">API Key</label>
+    <input id="key" type="text" placeholder="bili">
+    <small>Sent as <code>Authorization: Bearer &lt;key&gt;</code>.</small>
+
+    <label for="target">Target language</label>
+    <input id="target" type="text" placeholder="中文">
+    <small>Inserted into the system prompt: "Translate the user text into &lt;target&gt;."</small>
+
+    <div class="row">
+      <button type="submit" id="save" class="primary">Save</button>
+      <button type="button" id="test">Save &amp; test</button>
+      <button type="button" id="reset">Reset to defaults</button>
+    </div>
+    <div id="status" role="status" aria-live="polite"></div>
+  </form>
+
+  <script src="options.js"></script>
+</body>
+</html>

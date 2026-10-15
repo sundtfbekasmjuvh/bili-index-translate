@@ -1,0 +1,17 @@
+# Allowlist: only the two projects and the top-level docs are tracked.
+/*
+!/.gitignore
+!/README.md
+!/.gitattributes
+!/BiliIndexTranslate.Desktop/
+!/bili-index-translate/
+
+# Build output
+bin/
+obj/
+publish/
+publish-sc/
+TestResults/
+.vs/
+*.user
+*.suo

@@ -1,0 +1,141 @@
+<Window x:Class="BiliIndexTranslate.App.Settings.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bili Index Translate — Settings"
+        Style="{StaticResource UiWindow}"
+        Width="480" SizeToContent="Height" MaxHeight="860"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True">
+  <Window.Resources>
+    <Style TargetType="TextBox" BasedOn="{StaticResource UiTextBox}" />
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource UiPasswordBox}" />
+    <Style TargetType="CheckBox" BasedOn="{StaticResource UiCheckBox}" />
+    <Style TargetType="ComboBox" BasedOn="{StaticResource UiComboBox}" />
+  </Window.Resources>
+  <DockPanel>
+    <!-- Action bar -->
+    <Border DockPanel.Dock="Bottom" BorderBrush="{DynamicResource Ui.Border}" BorderThickness="0,1,0,0" Padding="18,10" Background="{DynamicResource Ui.Panel}">
+      <DockPanel>
+        <TextBlock x:Name="StatusText" DockPanel.Dock="Left" VerticalAlignment="Center" TextWrapping="Wrap" MaxWidth="250" Foreground="{DynamicResource Ui.TextSecondary}" FontSize="12" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+          <Button x:Name="CancelButton" Style="{StaticResource SecondaryButton}" Content="Cancel" Margin="0,0,8,0" Click="OnCancel" IsCancel="True" />
+          <Button x:Name="SaveButton" Style="{StaticResource SecondaryButton}" Content="Save" Margin="0,0,8,0" Click="OnSave" />
+          <Button x:Name="SaveTestButton" Style="{StaticResource PrimaryButton}" Content="Save and test" Click="OnSaveAndTest" IsDefault="True" />
+        </StackPanel>
+      </DockPanel>
+    </Border>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="18,6,18,14">
+      <StackPanel>
+        <!-- Reading -->
+        <TextBlock Style="{StaticResource GroupTitle}" Text="READING" />
+        <CheckBox x:Name="AutoTranslateBox" Content="Translate selected text automatically" />
+        <Grid Margin="0,4,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Row="0" Style="{StaticResource FieldLabel}" Text="Translate into" />
+          <ComboBox x:Name="TargetLanguageBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3" />
+          <TextBlock Grid.Row="1" Style="{StaticResource FieldLabel}" Text="Text size" />
+          <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,3">
+            <Slider x:Name="TextScaleSlider" Minimum="0.8" Maximum="1.6" TickFrequency="0.1" IsSnapToTickEnabled="True" Width="180" VerticalAlignment="Center" ValueChanged="OnTextScaleChanged" />
+            <TextBlock x:Name="TextScaleLabel" Margin="10,0,0,0" VerticalAlignment="Center" Width="44" />
+            <Button Style="{StaticResource SecondaryButton}" Content="Reset" Padding="8,2" Click="OnResetTextScale" />
+          </StackPanel>
+          <TextBlock Grid.Row="2" Style="{StaticResource FieldLabel}" Text="Appearance" />
+          <ComboBox x:Name="ThemeBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3">
+            <ComboBoxItem Content="Follow Windows" />
+            <ComboBoxItem Content="Light" />
+            <ComboBoxItem Content="Dark" />
+          </ComboBox>
+          <TextBlock Grid.Row="3" Style="{StaticResource FieldLabel}" Text="Editable fields" />
+          <ComboBox x:Name="EditablePolicyBox" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Margin="0,3" MinWidth="260">
+            <ComboBoxItem Content="Skip single-line inputs (address bars, search boxes)" />
+            <ComboBoxItem Content="Skip all editable fields" />
+            <ComboBoxItem Content="Translate everywhere" />
+          </ComboBox>
+        </Grid>
+        <CheckBox x:Name="ShowOriginalBox" Content="Show the original text under the translation" />
+        <TextBlock Style="{StaticResource HintText}" Text="Ctrl + mouse wheel over a popup also changes the text size." />
+
+        <!-- Service -->
+        <TextBlock Style="{StaticResource GroupTitle}" Text="SERVICE" />
+        <TextBlock Style="{StaticResource FieldLabel}" Text="Endpoint (base URL or full /chat/completions URL)" Margin="0,0,0,3" />
+        <TextBox x:Name="EndpointBox" />
+        <Grid Margin="0,8,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock Grid.Row="0" Style="{StaticResource FieldLabel}" Text="API key" Margin="0,0,0,3" />
+          <PasswordBox x:Name="ApiKeyBox" Grid.Row="1" Grid.Column="0" />
+          <TextBox x:Name="ApiKeyPlainBox" Grid.Row="1" Grid.Column="0" Visibility="Collapsed" />
+          <Button x:Name="RevealKeyButton" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecondaryButton}" Content="Show" Margin="6,0,0,0" Padding="8,3" Click="OnRevealKey" />
+        </Grid>
+        <Grid Margin="0,8,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Style="{StaticResource FieldLabel}" Text="Model" />
+          <ComboBox x:Name="ModelBox" Grid.Column="1" IsEditable="True" HorizontalAlignment="Left" MinWidth="220" />
+        </Grid>
+        <CheckBox x:Name="RelayBox" Content="Send requests through the relay instead of directly" Margin="0,8,0,2" Checked="OnRelayToggled" Unchecked="OnRelayToggled" />
+        <TextBox x:Name="RelayBox2" Margin="0,2,0,0" />
+        <TextBlock Style="{StaticResource HintText}" Text="Direct requests are always tried as configured. If the service answers HTTP 412 for direct requests, you can enable the relay here; the app never switches routes on its own. Your API key is stored encrypted for this Windows account." />
+
+        <!-- Applications -->
+        <TextBlock Style="{StaticResource GroupTitle}" Text="APPLICATIONS" />
+        <TextBlock Style="{StaticResource HintText}" Text="Selections in these programs are ignored (process name without .exe)." Margin="0,0,0,4" />
+        <ItemsControl x:Name="ExcludedList">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <DockPanel Margin="0,2">
+                <Button DockPanel.Dock="Right" Style="{StaticResource SecondaryButton}" Content="Remove" Padding="8,2" Tag="{Binding}" Click="OnRemoveExcluded" />
+                <TextBlock Text="{Binding}" VerticalAlignment="Center" />
+              </DockPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <DockPanel Margin="0,4,0,0">
+          <Button DockPanel.Dock="Right" Style="{StaticResource SecondaryButton}" Content="Add" Padding="10,3" Margin="6,0,0,0" Click="OnAddExcluded" />
+          <TextBox x:Name="NewExcludedBox" />
+        </DockPanel>
+
+        <!-- Fallback shortcut -->
+        <TextBlock Style="{StaticResource GroupTitle}" Text="FALLBACK SHORTCUT" />
+        <CheckBox x:Name="HotkeyEnabledBox" Content="Enable a shortcut that translates the current selection on demand" />
+        <DockPanel>
+          <TextBlock Style="{StaticResource FieldLabel}" Text="Shortcut" Width="120" />
+          <TextBox x:Name="HotkeyBox" Width="140" HorizontalAlignment="Left" />
+        </DockPanel>
+        <TextBlock x:Name="HotkeyStatus" Style="{StaticResource HintText}" Text="Used when UI Automation cannot read a selection: the app sends one Ctrl+C and translates the copied text. Automatic translation never uses the clipboard." />
+
+        <!-- Advanced -->
+        <TextBlock Style="{StaticResource GroupTitle}" Text="ADVANCED" />
+        <DockPanel>
+          <TextBlock Style="{StaticResource FieldLabel}" Text="Settle delay" Width="120" />
+          <Slider x:Name="DelaySlider" Minimum="120" Maximum="800" TickFrequency="10" IsSnapToTickEnabled="True" Width="180" VerticalAlignment="Center" ValueChanged="OnDelayChanged" />
+          <TextBlock x:Name="DelayLabel" Margin="10,0,0,0" VerticalAlignment="Center" />
+        </DockPanel>
+        <TextBlock Style="{StaticResource HintText}" Text="How long a selection must stay unchanged before it is translated (after mouse release)." />
+        <CheckBox x:Name="UiaEventsBox" Content="Also react to UI Automation selection-change events (keyboard and app-driven selections)" />
+        <CheckBox x:Name="FileLoggingBox" Content="Write diagnostics to a log file (no selected text, no keys)" />
+        <TextBlock Style="{StaticResource HintText}">
+          <Run Text="Settings file: " /><Run x:Name="SettingsPathRun" />
+        </TextBlock>
+      </StackPanel>
+    </ScrollViewer>
+  </DockPanel>
+</Window>

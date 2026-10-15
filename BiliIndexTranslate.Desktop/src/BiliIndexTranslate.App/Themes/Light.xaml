@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Warm neutral light palette. One accent only. -->
+  <SolidColorBrush x:Key="Popup.Surface" Color="#FCFAF7" />
+  <SolidColorBrush x:Key="Popup.SurfaceAlt" Color="#F3EFE9" />
+  <SolidColorBrush x:Key="Popup.Border" Color="#E3DDD4" />
+  <SolidColorBrush x:Key="Popup.Divider" Color="#ECE7E0" />
+  <SolidColorBrush x:Key="Popup.Text" Color="#2A2825" />
+  <SolidColorBrush x:Key="Popup.TextSecondary" Color="#75706A" />
+  <SolidColorBrush x:Key="Popup.TextFaint" Color="#A39D95" />
+  <SolidColorBrush x:Key="Popup.Accent" Color="#B2562F" />
+  <SolidColorBrush x:Key="Popup.AccentSoft" Color="#F5E6DE" />
+  <SolidColorBrush x:Key="Popup.Error" Color="#A63D2F" />
+  <SolidColorBrush x:Key="Popup.Hover" Color="#EDE7DF" />
+  <SolidColorBrush x:Key="Popup.Pressed" Color="#E3DBD1" />
+  <SolidColorBrush x:Key="Popup.ScrollThumb" Color="#CFC7BC" />
+  <SolidColorBrush x:Key="Popup.PinnedBorder" Color="#D9B9A9" />
+  <Color x:Key="Popup.ShadowColor">#000000</Color>
+  <sys:Double xmlns:sys="clr-namespace:System;assembly=System.Runtime" x:Key="Popup.ShadowOpacity">0.16</sys:Double>
+
+  <SolidColorBrush x:Key="Ui.Background" Color="#FAF8F5" />
+  <SolidColorBrush x:Key="Ui.Panel" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="Ui.Text" Color="#2A2825" />
+  <SolidColorBrush x:Key="Ui.TextSecondary" Color="#75706A" />
+  <SolidColorBrush x:Key="Ui.Border" Color="#DDD6CC" />
+  <SolidColorBrush x:Key="Ui.Accent" Color="#B2562F" />
+  <SolidColorBrush x:Key="Ui.AccentText" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="Ui.Control" Color="#FFFFFF" />
+  <SolidColorBrush x:Key="Ui.Success" Color="#3E7A4C" />
+  <SolidColorBrush x:Key="Ui.Error" Color="#A63D2F" />
+</ResourceDictionary>
